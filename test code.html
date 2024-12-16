@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Practice Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .answers button {
+            margin-right: 10px;
+            padding: 10px 15px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            cursor: pointer;
+        }
+        .answers button.correct {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+        }
+        .answers button.incorrect {
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <h1>Interactive Practice Test</h1>
+
+    <div id="quiz">
+        <!-- Example Question Template -->
+        <!--
+        <div class="question">
+            <p><strong>Question:</strong> What is the role of AAMI?</p>
+            <div class="answers">
+                <button onclick="checkAnswer(this, true)">A. To ensure safe and efficient medical instrumentation.</button>
+                <button onclick="checkAnswer(this, false)">B. To manage healthcare regulations.</button>
+                <button onclick="checkAnswer(this, false)">C. To provide patient care guidelines.</button>
+                <button onclick="checkAnswer(this, false)">D. To oversee hospital safety protocols.</button>
+            </div>
+        </div>
+        -->
+    </div>
+
+    <script>
+        const questions = [
+            {
+                text: "What is the role of AAMI?",
+                options: [
+                    "To ensure safe and efficient medical instrumentation.",
+                    "To manage healthcare regulations.",
+                    "To provide patient care guidelines.",
+                    "To oversee hospital safety protocols."
+                ],
+                correct: 0
+            },
+            {
+                text: "When should sharps containers be replaced?",
+                options: [
+                    "When they are 1/4 full.",
+                    "When they are 1/2 to 3/4 full.",
+                    "When they are completely full.",
+                    "After every use."
+                ],
+                correct: 1
+            },
+            {
+                text: "How is Hepatitis B primarily transmitted in hemodialysis facilities?",
+                options: [
+                    "Through contaminated surfaces.",
+                    "Through airborne particles.",
+                    "Through infected blood and bodily fluids.",
+                    "Through sharing equipment."
+                ],
+                correct: 2
+            }
+            // Add more questions here
+        ];
+
+        function renderQuiz() {
+            const quizContainer = document.getElementById('quiz');
+            questions.forEach((question, index) => {
+                const questionElement = document.createElement('div');
+                questionElement.classList.add('question');
+
+                const questionText = document.createElement('p');
+                questionText.innerHTML = `<strong>Question ${index + 1}:</strong> ${question.text}`;
+                questionElement.appendChild(questionText);
+
+                const answersContainer = document.createElement('div');
+                answersContainer.classList.add('answers');
+
+                question.options.forEach((option, i) => {
+                    const button = document.createElement('button');
+                    button.textContent = `${String.fromCharCode(65 + i)}. ${option}`;
+                    button.onclick = () => checkAnswer(button, i === question.correct);
+                    answersContainer.appendChild(button);
+                });
+
+                questionElement.appendChild(answersContainer);
+                quizContainer.appendChild(questionElement);
+            });
+        }
+
+        function checkAnswer(button, isCorrect) {
+            if (isCorrect) {
+                button.classList.add('correct');
+            } else {
+                button.classList.add('incorrect');
+            }
+            const buttons = button.parentNode.querySelectorAll('button');
+            buttons.forEach(btn => btn.disabled = true);
+        }
+
+        renderQuiz();
+    </script>
+</body>
+</html>
